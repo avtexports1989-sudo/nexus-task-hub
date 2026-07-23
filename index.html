@@ -2,316 +2,456 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>CBSE 6th Full Syllabus Quiz</title>
+<title>Ai Avengers | Smart Task Hub - Final Fixed</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-  :root{ --bg:#0f172a; --accent:#f97316; --accent2:#22c55e; --glass: rgba(30,41,59,0.7); }
-  *{box-sizing:border-box; margin:0; padding:0; font-family: 'Poppins', sans-serif;}
-  body { background: linear-gradient(135deg, #1e3a8a, #0f172a); color:#e2e8f0; min-height:100vh; padding:15px; display:flex; justify-content:center; align-items:center; }
- .container { width:100%; max-width:800px; background:var(--glass); backdrop-filter: blur(20px); padding:25px; border-radius:24px; border:1px solid rgba(148,163,184,0.2); }
- .logo {font-size:28px; font-weight:900; color:var(--accent); text-align:center; margin-bottom:15px}
- .btn {padding:14px 18px; margin:8px 0; border:none; border-radius:14px; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:white; cursor:pointer; font-weight:800; width:100%; font-size:17px; transition:0.3s}
- .btn:hover {transform:scale(1.03)}
- .btn-subject {background:rgba(15,23,42,0.8); display:flex; align-items:center; gap:10px; font-size:18px}
- .btn-option {background:rgba(15,23,42,0.8); text-align:left; border:2px solid transparent}
- .btn-option:hover {border-color:var(--accent)}
- .btn-option.correct {background:var(--accent2)}
- .btn-option.wrong {background:#ef4444}
-  input {width:100%; padding:12px; margin:8px 0; background:rgba(15,23,42,0.8); border:1px solid rgba(148,163,184,0.3); border-radius:10px; font-weight:600; font-size:16px; color:white}
- .timer {font-size:36px; font-weight:900; text-align:center; color:var(--accent)}
- .timer.low {color:#ef4444; animation: blink 1s infinite}
-  @keyframes blink {50%{opacity:0.5}}
- .questionBox {font-size:20px; font-weight:700; margin:20px 0}
- .scoreBoard {display:flex; justify-content:space-between; font-size:16px; font-weight:700; margin-bottom:15px; background:rgba(15,23,42,0.8); padding:10px; border-radius:10px}
- .subjectGrid {display:grid; grid-template-columns: repeat(2, 1fr); gap:12px}
+:root{ --blue:#4f46e5; --orange:#f97316; --red:#ef4444; --green:#22c55e; --glass:rgba(255,255,255,0.15); }
+*{box-sizing:border-box; margin:0; padding:0}
+body{font-family:'Poppins',sans-serif; color:#1e293b; background:linear-gradient(135deg,#667eea 0%,#764ba2 25%,#f093fb 50%,#f5576c 75%,#fda085 100%); background-size:400% 400%; animation:bg 15s ease infinite; padding:15px; height:100vh; overflow:hidden; font-size:19px}
+@keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes up{from{opacity:0; transform:translateY(20px)}to{opacity:1; transform:translateY(0)}}
+@keyframes slide{from{transform:translateX(100%); opacity:0}to{transform:translateX(0); opacity:1}}
+@keyframes zoom{from{transform:scale(0.7); opacity:0}to{transform:scale(1); opacity:1}}
+@keyframes done{0%{transform:scale(1)}100%{transform:scale(0); opacity:0}}
+.header{display:flex; justify-content:space-between; align-items:center; background:var(--glass); backdrop-filter:blur(20px); padding:16px 26px; border-radius:20px; border:1px solid rgba(255,255,255,0.3); margin-bottom:15px; position:relative; z-index:100}
+.logo{font-size:30px; font-weight:900; color:white}
+.header-actions{display:flex; gap:10px}
+.soundBtn{background:rgba(255,255,255,0.2); color:white; border:1px solid rgba(255,255,255,0.3); padding:11px 15px; border-radius:12px; font-weight:700; cursor:pointer; position:relative; font-size:18px}
+.soundBtn.on{background:var(--blue)}
+.notif-count{position:absolute; top:-7px; right:-7px; background:var(--red); color:white; font-size:12px; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; border:2px solid white}
+.container{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; height:calc(100vh - 105px)}
+.container.teacher-full{grid-template-columns:1fr}
+.column{background:var(--glass); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.3); padding:20px; border-radius:20px; overflow-y:auto; animation:up 0.4s ease}
+.column h3{font-size:24px; font-weight:800; margin-bottom:12px; padding-bottom:10px; border-bottom:2px solid rgba(255,255,255,0.3); color:white; display:flex; align-items:center; gap:10px}
+.btn{padding:14px 18px; margin:7px 0; border:none; border-radius:12px; background:linear-gradient(135deg,var(--blue),#6366f1); color:white; cursor:pointer; font-weight:700; width:100%; font-size:18px; display:flex; align-items:center; justify-content:center; gap:8px; transition:0.2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-orange{background:linear-gradient(135deg,var(--orange),#fb923c)}
+.btn-red{background:linear-gradient(135deg,var(--red),#f87171)}
+.btn-green{background:linear-gradient(135deg,var(--green),#4ade80)}
+.btn-small{padding:9px 14px; font-size:15px; width:auto}
+input,select{width:100%; padding:13px; margin:6px 0; background:rgba(255,255,255,0.9); border:none; border-radius:10px; font-weight:600; font-size:18px}
+.radio-group{display:flex; gap:12px; margin:10px 0; color:white; font-size:16px}
+.checkbox-list{max-height:180px; overflow-y:auto; background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; display:grid; grid-template-columns:repeat(5,1fr); gap:8px}
+.checkbox-item{display:flex; align-items:center; gap:6px; padding:7px; color:white; font-weight:600; background:rgba(255,255,255,0.08); border-radius:8px; font-size:15px}
+.task{background:rgba(255,255,255,0.2); padding:14px; margin:8px 0; border-radius:12px; font-weight:600; border-left:4px solid var(--blue); color:white; font-size:18px}
+.task.removing{animation:done 0.4s forwards}
+.studentCard{background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); padding:16px; margin:10px 0; border-radius:14px; font-weight:600; color:white; font-size:18px}
+.points{color:#fbbf24; font-weight:900; float:right; font-size:22px}
+.loginBox{text-align:center; padding:30px; background:var(--glass); backdrop-filter:blur(20px); border-radius:22px; width:90%; max-width:700px; margin:8vh auto; color:white; border:1px solid rgba(255,255,255,0.3); font-size:20px}
+.studentBtns{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-top:14px; max-height:45vh; overflow-y:auto}
+.studentLoginBtn{background:linear-gradient(135deg,var(--orange),#fb923c); color:white; padding:18px 8px; font-weight:800; border-radius:14px; border:none; cursor:pointer; font-size:17px}
+.attachment-preview{margin-top:8px; padding:12px; background:rgba(255,255,255,0.2); border-radius:10px; border:1px solid rgba(255,255,255,0.3); font-size:16px}
+.attachment-preview img{max-width:100%; border-radius:8px; max-height:160px; cursor:zoom-in; border:2px solid rgba(255,255,255,0.3)}
+.chart-container{background:white; padding:12px; border-radius:14px; margin-top:10px; height:340px; position:relative}
+.teacher-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px}
+.chart-menu{display:flex; gap:8px; margin-bottom:10px; background:rgba(255,255,255,0.12); padding:8px; border-radius:10px; width:fit-content}
+.chart-menu-btn{padding:9px 16px; border:none; border-radius:8px; background:rgba(255,255,255,0.2); color:white; font-weight:800; cursor:pointer; font-size:15px; transition:0.2s}
+.chart-menu-btn.active{background:var(--green); color:white; box-shadow:0 2px 10px rgba(34,197,94,0.4)}
+.task-tracker-list{max-height:400px; overflow-y:auto}
+.tracker-card{background:rgba(255,255,255,0.13); border:1px solid rgba(255,255,255,0.22); padding:12px; margin:7px 0; border-radius:10px; color:white}
+.tracker-card-header{display:flex; justify-content:space-between; font-weight:800; font-size:17px; margin-bottom:6px}
+.tracker-stats{display:flex; gap:10px; font-size:14px; flex-wrap:wrap}
+.tracker-stat{background:rgba(255,255,255,0.18); padding:5px 12px; border-radius:12px; font-weight:700}
+.progress-bar{height:6px; background:rgba(255,255,255,0.25); border-radius:10px; margin-top:7px; overflow:hidden}
+.progress-fill{height:100%; border-radius:10px}
+.notif-panel{position:absolute; top:65px; right:12px; width:380px; max-height:70vh; background:white; border-radius:16px; padding:14px; z-index:2000; display:none; box-shadow:0 15px 40px rgba(0,0,0,0.25); overflow-y:auto}
+.notif-panel.show{display:block}
+.notif-item{padding:10px; margin:6px 0; background:#f1f5f9; border-radius:10px; border-left:4px solid var(--blue); color:#1e293b; font-size:15px}
+.notif-item.unread{background:#fff7ed; border-left-color:var(--orange); font-weight:700}
+.toast-container{position:fixed; top:14px; right:14px; z-index:3000; display:flex; flex-direction:column; gap:8px}
+.toast{background:white; color:#1e293b; padding:15px 18px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.2); min-width:320px; animation:slide 0.3s ease; border-left:5px solid var(--blue); font-size:16px}
+#hoverZoom{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); backdrop-filter:blur(12px); z-index:9999; justify-content:center; align-items:center; flex-direction:column; padding:15px}
+#hoverZoom.show{display:flex}
+#hoverZoom img{max-width:90vw; max-height:80vh; border-radius:16px; border:3px solid white; animation:zoom 0.3s ease; background:white}
 </style>
 </head>
 <body>
+<audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/24/audio_d1716c42e4.mp3"></audio>
+<audio id="notifSound" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3"></audio>
+<div class="toast-container" id="toastContainer"></div>
+<div id="hoverZoom" onclick="hideZoom(true)"><span style="position:absolute; top:14px; right:18px; color:white; background:rgba(255,255,255,0.2); padding:7px 12px; border-radius:18px; font-size:14px">✕ Close</span><img id="hoverZoomImg" src=""><div id="hoverZoomCap" style="color:white; margin-top:12px; background:rgba(255,255,255,0.15); padding:8px 16px; border-radius:18px; font-weight:700; font-size:16px"></div></div>
 
-<div class="container">
-  <div class="logo"><i class="fa-solid fa-graduation-cap"></i> CBSE 6th Full Syllabus Quiz</div>
+<div class="header">
+<div class="logo"><i class="fa-solid fa-rocket"></i> Ai Avengers Hub</div>
+<div class="header-actions">
+<button class="soundBtn" id="notifBtn" onclick="toggleNotifPanel()"><i class="fa-solid fa-bell"></i> <span id="notifCount" class="notif-count" style="display:none">0</span></button>
+<button class="soundBtn on" id="soundToggle" onclick="toggleSound()"><i class="fa-solid fa-volume-high"></i></button>
+</div>
+<div class="notif-panel" id="notifPanel"><div style="display:flex; justify-content:space-between; margin-bottom:10px"><h4 style="color:#1e293b; font-size:17px"><i class="fa-solid fa-bell"></i> Notifications</h4><div style="display:flex; gap:5px"><button class="btn btn-small" onclick="markAllRead()" style="width:auto">Read</button><button class="btn btn-small btn-red" onclick="clearNotifs()" style="width:auto">Clear</button></div></div><div id="notifList"></div></div>
+</div>
 
-  <!-- HOME -->
-  <div id="homeScreen">
-    <input id="playerName" placeholder="Enter Your Name">
-    <h3 style="margin:15px 0">Choose Subject - 50 Questions Each:</h3>
-    <div class="subjectGrid">
-      <button class="btn btn-subject" onclick="startQuiz('Maths')"><i class="fa-solid fa-calculator"></i> Maths</button>
-      <button class="btn btn-subject" onclick="startQuiz('Science')"><i class="fa-solid fa-flask"></i> Science</button>
-      <button class="btn btn-subject" onclick="startQuiz('Social')"><i class="fa-solid fa-globe"></i> Social Science</button>
-      <button class="btn btn-subject" onclick="startQuiz('English')"><i class="fa-solid fa-book"></i> English</button>
-      <button class="btn btn-subject" onclick="startQuiz('Hindi')"><i class="fa-solid fa-language"></i> Hindi</button>
-    </div>
-    <button class="btn" onclick="resetProgress()" style="background:#ef4444; margin-top:15px"><i class="fa-solid fa-rotate"></i> Reset All Progress</button>
-  </div>
+<div id="loginScreen" class="loginBox">
+<h3><i class="fa-solid fa-shield-halved"></i> Secure Access</h3>
+<select id="loginRole" onchange="handleRoleChange()"><option value="">Select Role</option><option value="teacher">👩🏫 Teacher</option><option value="parent">👨👩👧 Parent</option><option value="student">🧑🎓 Student</option></select>
+<div id="passwordBox" style="display:none"><input id="loginPassword" type="password" placeholder="Enter Password"><button class="btn btn-orange" onclick="login()">Login</button></div>
+<div id="studentLogin" style="display:none"><p id="loginTitle" style="font-weight:700; margin:12px 0; font-size:20px">Tap Your Name</p><div class="studentBtns" id="studentBtnContainer"></div></div>
+</div>
 
-  <!-- QUIZ -->
-  <div id="quizScreen" style="display:none">
-    <div class="scoreBoard">
-      <span><i class="fa-solid fa-book"></i> <span id="currentSub"></span></span>
-      <span>Q: <span id="qNo">1</span>/10</span>
-      <span>Score: <span id="score">0</span></span>
-    </div>
-    <div class="timer" id="timer">45</div>
-    <div class="questionBox" id="question"></div>
-    <div id="options"></div>
-  </div>
+<div id="mainDashboard" style="display:none">
+<div class="container" id="mainContainer">
+<div class="column teacher" id="teacherCol" style="display:none">
+<h3><i class="fa-solid fa-chalkboard-user"></i> Teacher Dashboard</h3>
+<div class="teacher-grid">
+<div>
+<input id="taskName" placeholder="✨ Task Name">
+<input type="file" id="teacherFileInput" accept="image/*,video/*,.pdf,.doc,.docx,.txt">
+<div id="teacherFilePreview"></div>
+<div class="radio-group"><label><input type="radio" name="sendType" value="all" checked> All</label><label><input type="radio" name="sendType" value="select"> Select</label></div>
+<div id="studentSelectBox" class="checkbox-list" style="display:none"></div>
+<button class="btn" onclick="addTask()"><i class="fa-solid fa-paper-plane"></i> Assign Task</button>
+<div style="background:rgba(255,255,255,0.15); padding:12px; border-radius:10px; margin:8px 0; border:1px dashed rgba(255,255,255,0.3)">
+<h4 style="color:white; font-size:15px; margin-bottom:6px">🔔 Reminder Center</h4>
+<button class="btn btn-orange" onclick="remindAll()"><i class="fa-solid fa-bell"></i> Remind All Pending</button>
+<div style="display:flex; gap:6px; margin-top:6px; align-items:center; color:white; font-size:14px"><input type="checkbox" id="autoRemindToggle" onchange="toggleAuto()" style="width:auto"><label for="autoRemindToggle">Auto every 10 min</label></div>
+</div>
+<button class="btn" onclick="downloadAll()"><i class="fa-solid fa-download"></i> Download All Submissions</button>
+<button class="btn btn-red" onclick="resetAll()"><i class="fa-solid fa-rotate"></i> Reset</button>
+</div>
+<div>
+<h4 style="font-size:18px">📊 Finished Tasks Chart</h4>
+<div class="chart-menu">
+<button class="chart-menu-btn active" data-chart="daily" onclick="setChartView('daily')"><i class="fa-solid fa-calendar-day"></i> Daily</button>
+<button class="chart-menu-btn" data-chart="weekly" onclick="setChartView('weekly')"><i class="fa-solid fa-calendar-week"></i> Weekly</button>
+</div>
+<div class="chart-container"><canvas id="performanceChart"></canvas></div>
+<div id="chartStats" style="margin-top:8px; color:white; font-size:14px; background:rgba(255,255,255,0.12); padding:8px 12px; border-radius:10px"></div>
+</div>
+<div>
+<h4 style="font-size:18px">📋 Task Tracker - All 10 Students</h4>
+<div class="task-tracker-list" id="taskTrackerList"></div>
+<h4 style="margin-top:12px; font-size:18px">✅ Submissions To Check</h4>
+<div id="verifyList"></div>
+</div>
+</div>
+<button class="btn btn-red" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+</div>
+<div class="column student" id="studentCol" style="display:none">
+<h3><i class="fa-solid fa-book-open"></i> My Tasks - Pending Only</h3>
+<p id="studentDate" style="text-align:center; font-weight:700; color:white; margin-bottom:8px; font-size:18px"></p>
+<div id="allStudents"></div>
+<button class="btn btn-red" onclick="logout()">Logout</button>
+</div>
+<div class="column reward" id="rewardCol" style="display:none">
+<h3><i class="fa-solid fa-trophy"></i> Reward Store</h3>
+<p style="text-align:center; font-weight:800; color:white; font-size:20px">Points: <span id="myPoints" style="color:#fbbf24">0</span></p>
+<div id="rewardStore"></div>
+<button class="btn btn-red" onclick="logout()">Logout</button>
+</div>
+<div class="column parent" id="parentCol" style="display:none">
+<h3><i class="fa-solid fa-house-user"></i> <span id="parentKidName">Parent</span></h3>
+<p style="color:white; font-weight:700; font-size:18px">Points: <span id="parentKidPoints" style="color:#fbbf24">0</span></p>
+<h4 style="font-size:18px">📝 Kid Tasks</h4><div id="parentKidTasks"></div>
+<h4 style="font-size:18px">🚨 Alerts</h4><div id="parentAlerts"></div>
+<button class="btn btn-red" onclick="logout()">Logout</button>
+</div>
+</div>
+</div>
 
-  <!-- RESULT -->
-  <div id="resultScreen" style="display:none; text-align:center">
-    <h2>Quiz Finished!</h2>
-    <h1 id="finalScore" style="font-size:50px; color:var(--accent2)"></h1>
-    <p id="resultMsg"></p>
-    <button class="btn" onclick="showHome()"><i class="fa-solid fa-house"></i> Back to Home</button>
-  </div>
+<div id="submitModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); z-index:999; justify-content:center; align-items:center">
+<div style="background:rgba(255,255,255,0.15); backdrop-filter:blur(20px); padding:22px; border-radius:16px; width:90%; max-width:420px; border:1px solid rgba(255,255,255,0.3); color:white; font-size:18px">
+<h3 style="font-size:22px">📎 Submit: <span id="modalTaskName"></span></h3><input type="file" id="fileInput"><div id="filePreview"></div>
+<div style="display:flex; gap:8px; margin-top:10px"><button class="btn btn-green" onclick="submitFile()">Submit</button><button class="btn btn-red" onclick="closeModal()">Cancel</button></div>
+</div>
 </div>
 
 <script>
-const SUBJECTS = {
-  Maths: [
-    {q:"What is 25 x 4?", opts:["80","100","120","90"], ans:2},
-    {q:"LCM of 4 and 6 is?", opts:["8","10","12","24"], ans:3},
-    {q:"Area of rectangle =?", opts:["L+B","LxB","2(L+B)","L/B"], ans:2},
-    {q:"1000 grams =? kg", opts:["10kg","1kg","100kg","0.1kg"], ans:2},
-    {q:"Next prime after 7?", opts:["8","9","10","11"], ans:4},
-    {q:"Value of 5^2?", opts:["10","15","25","30"], ans:3},
-    {q:"Perimeter of square side 5cm?", opts:["10","15","20","25"], ans:3},
-    {q:"1/2 + 1/4 =?", opts:["2/6","3/4","1/4","1/2"], ans:2},
-    {q:"Largest 3 digit number?", opts:["999","1000","998","111"], ans:1},
-    {q:"How many minutes in 1 hour?", opts:["50","60","70","100"], ans:2},
-    {q:"10% of 200?", opts:["10","20","30","200"], ans:2},
-    {q:"Factor of 12?", opts:["5","7","3","9"], ans:3},
-    {q:"2 dozen =?", opts:["12","18","24","36"], ans:3},
-    {q:"Round 456 to nearest 10?", opts:["450","460","400","500"], ans:2},
-    {q:"How many sides in hexagon?", opts:["5","6","7","8"], ans:2},
-    {q:"1 km =? meters", opts:["100","1000","10000","10"], ans:2},
-    {q:"Product of 7 and 8?", opts:["54","56","64","49"], ans:2},
-    {q:"Difference between 100 and 37?", opts:["63","73","53","67"], ans:1},
-    {q:"How many faces in cube?", opts:["4","6","8","12"], ans:2},
-    {q:"Smallest prime number?", opts:["0","1","2","3"], ans:3},
-    {q:"5/10 in decimal?", opts:["0.5","0.05","0.2","0.1"], ans:1},
-    {q:"3 days =? hours", opts:["48","60","72","24"], ans:3},
-    {q:"Square of 9?", opts:["18","72","81","90"], ans:3},
-    {q:"How many cm in 1 meter?", opts:["10","100","1000","50"], ans:2},
-    {q:"7 x 6 - 5 =?", opts:["37","42","35","47"], ans:1},
-    {q:"Multiple of 5?", opts:["12","17","25","28"], ans:3},
-    {q:"Volume formula of cube?", opts:["LxB","LxBxH","side^3","2L+2B"], ans:3},
-    {q:"Half of 84?", opts:["40","42","44","48"], ans:2},
-    {q:"How many zeros in 10000?", opts:["2","3","4","5"], ans:3},
-    {q:"Angle in right angle?", opts:["45°","90°","180°","360°"], ans:2},
-    {q:"15 + 27 =?", opts:["32","42","40","41"], ans:2},
-    {q:"8 x 9 =?", opts:["72","81","64","90"], ans:1},
-    {q:"How many days in leap year?", opts:["365","366","364","360"], ans:2},
-    {q:"Fraction of 1 hour = 30 min?", opts:["1/2","1/3","1/4","2/3"], ans:1},
-    {q:"Average of 4,6,8?", opts:["5","6","7","8"], ans:2},
-    {q:"How many triangles in triangle?", opts:["1","2","3","4"], ans:1},
-    {q:"Convert 2.5 kg to grams?", opts:["250","2500","25","25000"], ans:2},
-    {q:"Roman numeral for 10?", opts:["V","X","L","I"], ans:2},
-    {q:"How many edges in cuboid?", opts:["8","10","12","14"], ans:3},
-    {q:"Cost of 3 pens @ Rs 5?", opts:["10","15","20","8"], ans:2},
-    {q:"Divisible by 3?", opts:["14","17","21","22"], ans:3},
-    {q:"Next even number after 18?", opts:["19","20","21","22"], ans:2},
-    {q:"1/3 of 90?", opts:["20","30","40","45"], ans:2},
-    {q:"How many seconds in 1 minute?", opts:["50","60","100","30"], ans:2},
-    {q:"9 x 0 =?", opts:["0","1","9","90"], ans:1},
-    {q:"Largest 2 digit number?", opts:["99","100","89","90"], ans:1},
-    {q:"Sum of angles in triangle?", opts:["90°","180°","270°","360°"], ans:2},
-    {q:"50 divided by 5?", opts:["5","10","15","20"], ans:2},
-    {q:"How many weeks in 1 year approx?", opts:["48","50","52","54"], ans:3}
-  ],
-  Science: [
-    {q:"Main source of energy for Earth?", opts:["Moon","Sun","Wind","Fire"], ans:2},
-    {q:"Human body has how many bones?", opts:["206","208","210","204"], ans:1},
-    {q:"Which gas do plants take in?", opts:["Oxygen","CO2","Nitrogen","Hydrogen"], ans:2},
-    {q:"Boiling point of water?", opts:["50°C","100°C","0°C","212°C"], ans:2},
-    {q:"Example of transparent object?", opts:["Wood","Glass","Metal","Wall"], ans:2},
-    {q:"Largest organ in human body?", opts:["Heart","Liver","Skin","Brain"], ans:3},
-    {q:"What is H2O?", opts:["Salt","Water","Oxygen","Sugar"], ans:2},
-    {q:"Which animal lays eggs?", opts:["Dog","Cat","Hen","Cow"], ans:3},
-    {q:"Part of plant that absorbs water?", opts:["Leaf","Stem","Root","Flower"], ans:3},
-    {q:"Force that pulls things down?", opts:["Magnetism","Gravity","Friction","Push"], ans:2},
-    {q:"How many chambers in human heart?", opts:["2","3","4","5"], ans:3},
-    {q:"Which vitamin from sunlight?", opts:["A","B","C","D"], ans:4},
-    {q:"State of matter of ice?", opts:["Liquid","Gas","Solid","Plasma"], ans:3},
-    {q:"Organ for breathing?", opts:["Kidney","Lungs","Liver","Heart"], ans:2},
-    {q:"Which is not a planet?", opts:["Mars","Sun","Jupiter","Venus"], ans:2},
-    {q:"Food group in rice?", opts:["Protein","Carbohydrate","Fat","Vitamin"], ans:2},
-    {q:"How many legs spider has?", opts:["6","8","10","4"], ans:2},
-    {q:"Metal used in wires?", opts:["Iron","Copper","Gold","Aluminum"], ans:2},
-    {q:"Process of plant making food?", opts:["Respiration","Photosynthesis","Digestion","Transpiration"], ans:2},
-    {q:"Unit of force?", opts:["Joule","Newton","Watt","Meter"], ans:2},
-    {q:"Which gas in air is most?", opts:["Oxygen","CO2","Nitrogen","Helium"], ans:3},
-    {q:"Body part to see?", opts:["Ear","Nose","Eye","Tongue"], ans:3},
-    {q:"Example of mammal?", opts:["Fish","Frog","Bat","Lizard"], ans:3},
-    {q:"Melting point of ice?", opts:["0°C","100°C","50°C","-10°C"], ans:1},
-    {q:"Which is renewable resource?", opts:["Coal","Petrol","Sun","Iron"], ans:3},
-    {q:"How many senses humans have?", opts:["3","4","5","6"], ans:3},
-    {q:"Part of cell with DNA?", opts:["Nucleus","Cell Wall","Cytoplasm","Vacuole"], ans:1},
-    {q:"Which is not a fiber?", opts:["Cotton","Wool","Plastic","Silk"], ans:3},
-    {q:"Tool to measure temperature?", opts:["Scale","Thermometer","Clock","Barometer"], ans:2},
-    {q:"How many planets in solar system?", opts:["7","8","9","10"], ans:2},
-    {q:"Organ that pumps blood?", opts:["Brain","Lungs","Heart","Kidney"], ans:3},
-    {q:"Which is amphibian?", opts:["Snake","Frog","Fish","Bird"], ans:2},
-    {q:"Gas we exhale?", opts:["Oxygen","CO2","Nitrogen","Hydrogen"], ans:2},
-    {q:"Example of conductor?", opts:["Wood","Plastic","Copper","Rubber"], ans:3},
-    {q:"How many teeth adult has?", opts:["20","28","32","36"], ans:3},
-    {q:"Which is not a bird?", opts:["Sparrow","Bat","Eagle","Peacock"], ans:2},
-    {q:"Main function of roots?", opts:["Make food","Hold plant","Give color","Store air"], ans:2},
-    {q:"Which vitamin for eyes?", opts:["A","B","C","D"], ans:1},
-    {q:"Fastest land animal?", opts:["Lion","Tiger","Cheetah","Leopard"], ans:3},
-    {q:"What causes day and night?", opts:["Earth rotation","Earth revolution","Moon","Sun"], ans:1},
-    {q:"How many limbs human has?", opts:["2","3","4","5"], ans:3},
-    {q:"Which is not a fossil fuel?", opts:["Coal","Petrol","Wood","Diesel"], ans:3},
-    {q:"Instrument to see stars?", opts:["Microscope","Telescope","Binocular","Camera"], ans:2},
-    {q:"How many bones in hand?", opts:["20","24","27","30"], ans:3},
-    {q:"Which is seedless plant?", opts:["Mango","Fern","Rose","Wheat"], ans:2},
-    {q:"Unit of current?", opts:["Volt","Ampere","Ohm","Watt"], ans:2},
-    {q:"Which is insect?", opts:["Spider","Ant","Earthworm","Snail"], ans:2},
-    {q:"How many phases of water?", opts:["2","3","4","5"], ans:2},
-    {q:"Which organ filters blood?", opts:["Heart","Liver","Kidney","Lungs"], ans:3}
-  ],
-  Social: [
-    {q:"Capital of India?", opts:["Mumbai","Delhi","Kolkata","Chennai"], ans:2},
-    {q:"Who wrote National Anthem?", opts:["Tagore","Gandhi","Nehru","Patel"], ans:1},
-    {q:"Largest planet in Solar System?", opts:["Earth","Mars","Jupiter","Saturn"], ans:3},
-    {q:"River in Chennai?", opts:["Ganga","Yamuna","Coovam","Godavari"], ans:3},
-    {q:"Who was first PM of India?", opts:["Indira Gandhi","Jawaharlal Nehru","Rajiv Gandhi","Modi"], ans:2},
-    {q:"National animal of India?", opts:["Lion","Elephant","Tiger","Peacock"], ans:3},
-    {q:"How many states in India?", opts:["25","27","28","29"], ans:3},
-    {q:"Currency of India?", opts:["Dollar","Euro","Rupee","Pound"], ans:3},
-    {q:"Largest state in India by area?", opts:["UP","Rajasthan","MP","Maharashtra"], ans:2},
-    {q:"Who is called Father of Nation?", opts:["Nehru","Gandhi","Bose","Ambedkar"], ans:2},
-    {q:"Longest river in India?", opts:["Godavari","Krishna","Ganga","Yamuna"], ans:3},
-    {q:"Capital of Tamil Nadu?", opts:["Madurai","Coimbatore","Chennai","Salem"], ans:3},
-    {q:"National bird of India?", opts:["Sparrow","Peacock","Parrot","Crow"], ans:2},
-    {q:"How many continents?", opts:["5","6","7","8"], ans:3},
-    {q:"Who invented printing press?", opts:["Einstein","Gutenberg","Newton","Edison"], ans:2},
-    {q:"Desert in India?", opts:["Thar","Sahara","Gobi","Kalahari"], ans:1},
-    {q:"How many oceans?", opts:["3","4","5","6"], ans:3},
-    {q:"Mountain range in North India?", opts:["Aravalli","Himalaya","Vindhya","Satpura"], ans:2},
-    {q:"Who discovered India sea route?", opts:["Columbus","Vasco da Gama","Magellan","Cook"], ans:2},
-    {q:"National flower of India?", opts:["Rose","Lotus","Sunflower","Marigold"], ans:2},
-    {q:"Capital of USA?", opts:["New York","Washington DC","London","Paris"], ans:2},
-    {q:"How many players in cricket team?", opts:["9","10","11","12"], ans:3},
-    {q:"Largest ocean?", opts:["Atlantic","Indian","Arctic","Pacific"], ans:4},
-    {q:"Who built Taj Mahal?", opts:["Akbar","Shah Jahan","Aurangzeb","Babur"], ans:2},
-    {q:"Language spoken in Kerala?", opts:["Tamil","Telugu","Malayalam","Kannada"], ans:3},
-    {q:"How many pillars in Ashoka Chakra?", opts:["20","22","24","26"], ans:3},
-    {q:"Capital of France?", opts:["Rome","London","Paris","Berlin"], ans:3},
-    {q:"Which is not a Union Territory?", opts:["Delhi","Pondicherry","Goa","Ladakh"], ans:3},
-    {q:"First woman PM of India?", opts:["Pratibha","Indira","Sonia","Mamta"], ans:2},
-    {q:"How many days in a week?", opts:["5","6","7","8"], ans:3},
-    {q:"Highest dam in India?", opts:["Bhakra","Hirakud","Nagarjuna","Tehri"], ans:4},
-    {q:"Who wrote Mahabharata?", opts:["Valmiki","Ved Vyas","Tulsidas","Kabir"], ans:2},
-    {q:"Capital of Australia?", opts:["Sydney","Melbourne","Canberra","Perth"], ans:3},
-    {q:"How many minutes in 1 degree longitude?", opts:["2","4","6","8"], ans:2},
-    {q:"Which city is called Pink City?", opts:["Delhi","Jaipur","Agra","Udaipur"], ans:2},
-    {q:"Father of Computer?", opts:["Einstein","Babbage","Newton","Tesla"], ans:2},
-    {q:"How many colors in Indian flag?", opts:["2","3","4","5"], ans:2},
-    {q:"Capital of Japan?", opts:["Beijing","Seoul","Tokyo","Bangkok"], ans:3},
-    {q:"Which is the Red Planet?", opts:["Venus","Mars","Jupiter","Saturn"], ans:2},
-    {q:"How many fundamental rights?", opts:["5","6","7","8"], ans:2},
-    {q:"Who was Iron Man of India?", opts:["Patel","Nehru","Bose","Tilak"], ans:1},
-    {q:"Capital of UK?", opts:["Paris","London","Rome","Madrid"], ans:2},
-    {q:"Largest democracy in world?", opts:["USA","China","India","Russia"], ans:3},
-    {q:"How many wheels Ashoka Chakra has?", opts:["20","22","24","26"], ans:3},
-    {q:"Who composed Vande Mataram?", opts:["Tagore","Bankim Chandra","Sarojini","Gandhi"], ans:2},
-    {q:"Capital of Canada?", opts:["Toronto","Ottawa","Vancouver","Montreal"], ans:2},
-    {q:"How many time zones in India?", opts:["1","2","3","4"], ans:1},
-    {q:"Which is the Coldest place in India?", opts:["Shimla","Manali","Leh","Srinagar"], ans:3},
-    {q:"National sport of India?", opts:["Cricket","Hockey","Football","Kabaddi"], ans:2}
-  ],
-  English: [
-    {q:"Synonym of 'Big'?", opts:["Small","Large","Tiny","Little"], ans:2},
-    {q:"Plural of 'Child'?", opts:["Childs","Children","Childes","Child"], ans:2},
-    {q:"Opposite of 'Hot'?", opts:["Warm","Cold","Cool","Heat"], ans:2},
-    {q:"'The cat ____ on the mat'?", opts:["sit","sits","sitting","sat"], ans:2},
-    {q:"Which is a noun?", opts:["Run","Beautiful","School","Quickly"], ans:3},
-    {q:"Antonym of 'Day'?", opts:["Morning","Night","Evening","Noon"], ans:2},
-    {q:"Past tense of 'Go'?", opts:["Goed","Went","Gone","Going"], ans:2},
-    {q:"Which is pronoun?", opts:["Ram","He","Book","School"], ans:2},
-    {q:"Correct spelling?", opts:["Recieve","Receive","Recive","Receeve"], ans:2},
-    {q:"'Birds ____ in the sky'?", opts:["fly","flies","flying","flew"], ans:1},
-    {q:"Synonym of 'Happy'?", opts:["Sad","Joyful","Angry","Tired"], ans:2},
-    {q:"Plural of 'Mouse'?", opts:["Mouses","Mice","Mouse","Mices"], ans:2},
-    {q:"Which is an adjective?", opts:["Run","Blue","Jump","Sleep"], ans:2},
-    {q:"Opposite of 'Start'?", opts:["Begin","End","Continue","Stop"], ans:2},
-    {q:"'I ____ to school yesterday'?", opts:["go","went","gone","going"], ans:2},
-    {q:"Which is verb?", opts:["Table","Chair","Write","Book"], ans:3},
-    {q:"Correct article: ____ apple", opts:["A","An","The","No"], ans:2},
-    {q:"Synonym of 'Fast'?", opts:["Slow","Quick","Lazy","Weak"], ans:2},
-    {q:"Plural of 'Foot'?", opts:["Foots","Feet","Footes","Foot"], ans:2},
-    {q:"Opposite of 'Win'?", opts:["Lose","Gain","Play","Game"], ans:1},
-    {q:"'She ____ a song'?", opts:["sing","sings","singing","sang"], ans:2},
-    {q:"Which is adverb?", opts:["Slow","Slowly","Slowness","Slowest"], ans:2},
-    {q:"Correct preposition: Book ____ table", opts:["in","on","at","by"], ans:2},
-    {q:"Synonym of 'Smart'?", opts:["Dull","Clever","Weak","Silly"], ans:2},
-    {q:"Plural of 'Box'?", opts:["Boxs","Boxes","Box","Boxes"], ans:2},
-    {q:"Opposite of 'Near'?", opts:["Close","Far","Next","Beside"], ans:2},
-    {q:"'They ____ playing'?", opts:["is","are","am","was"], ans:2},
-    {q:"Which is conjunction?", opts:["And","Run","Big","Fast"], ans:1},
-    {q:"Correct spelling?", opts:["Definately","Definitely","Definetly","Definietly"], ans:2},
-    {q:"'The sun ____ in east'?", opts:["rise","rises","rising","rose"], ans:2},
-    {q:"Synonym of 'Beautiful'?", opts:["Ugly","Pretty","Bad","Poor"], ans:2},
-    {q:"Plural of 'Knife'?", opts:["Knifes","Knives","Knife","Knifes"], ans:2},
-    {q:"Opposite of 'Full'?", opts:["Empty","Half","Less","More"], ans:1},
-    {q:"'We ____ dinner at 8'?", opts:["have","has","had","having"], ans:1},
-    {q:"Which is interjection?", opts:["Wow","Run","Big","Fast"], ans:1},
-    {q:"Correct punctuation: What is your name", opts:[".","?","!",";"], ans:2},
-    {q:"Synonym of 'Angry'?", opts:["Calm","Furious","Happy","Sad"], ans:2},
-    {q:"Plural of 'Baby'?", opts:["Babys","Babies","Baby","Babies"], ans:2},
-    {q:"Opposite of 'Strong'?", opts:["Weak","Powerful","Hard","Tough"], ans:1},
-    {q:"'He ____ football'?", opts:["play","plays","playing","played"], ans:2},
-    {q:"Which is possessive pronoun?", opts:["He","His","Him","They"], ans:2},
-    {q:"Correct spelling?", opts:["Seperate","Separate","Separete","Seprate"], ans:2},
-    {q:"'Birds ____ with wings'?", opts:["fly","flies","flying","flew"], ans:1},
-    {q:"Synonym of 'Rich'?", opts:["Poor","Wealthy","Cheap","Costly"], ans:2},
-    {q:"Plural of 'City'?", opts:["Citys","Cities","City","Cityes"], ans:2},
-    {q:"Opposite of 'Young'?", opts:["Child","Old","Baby","New"], ans:2},
-    {q:"'I ____ my homework'?", opts:["do","does","did","doing"], ans:3},
-    {q:"Which is proper noun?", opts:["City","Delhi","Country","River"], ans:2},
-    {q:"Correct spelling?", opts:["Acommodate","Accomodate","Accommodate","Accomodete"], ans:3}
-  ],
-  Hindi: [
-    {q:"'पानी' का समानार्थी शब्द?", opts:["आग","जल","हवा","मिट्टी"], ans:2},
-    {q:"'सूरज' का विलोम शब्द?", opts:["चाँद","तारा","बादल","आकाश"], ans:1},
-    {q:"'बिल्ली' का बहुवचन?", opts:["बिल्लियाँ","बिल्ले","बिल्ली","बिल्लू"], ans:1},
-    {q:"भारत की राजधानी?", opts:["मुंबई","दिल्ली","कोलकाता","चेन्नई"], ans:2},
-    {q:"'पढ़ना' क्रिया का भूतकाल?", opts:["पढ़ता","पढ़ा","पढ़ेगा","पढ़ने"], ans:2},
-    {q:"'खुश' का विलोम?", opts:["दुखी","खुशी","खुशहाल","खुशनुमा"], ans:1},
-    {q:"'घर' का पर्यायवाची?", opts:["विद्यालय","आलय","खेत","बाजार"], ans:2},
-    {q:"'एक' का बहुवचन?", opts:["अनेक","दो","तीन","चार"], ans:1},
-    {q:"'मित्र' का अर्थ?", opts:["शत्रु","दोस्त","अजनबी","पड़ोसी"], ans:2},
-    {q:"'आकाश' का समानार्थी?", opts:["धरती","नभ","समुद्र","पर्वत"], ans:2},
-    {q:"'गर्म' का विलोम?", opts:["ठंडा","गरम","तेज","धीमा"], ans:1},
-    {q:"'पुस्तक' का बहुवचन?", opts:["पुस्तकें","पुस्तक","पुस्तकालय","पुस्तकाकार"], ans:1},
-    {q:"'सत्य' का विलोम?", opts:["झूठ","सच","धर्म","न्याय"], ans:1},
-    {q:"'बच्चा' का स्त्रीलिंग?", opts:["बच्ची","बच्चे","बच्चों","बच्चा"], ans:1},
-    {q:"'विद्यालय' में कौन पढ़ते हैं?", opts:["डॉक्टर","छात्र","किसान","सिपाही"], ans:2},
-    {q:"'फल' का बहुवचन?", opts:["फल","फलों","फलें","फलियां"], ans:2},
-    {q:"'रात' का विलोम?", opts:["सुबह","दिन","शाम","दोपहर"], ans:2},
-    {q:"'भारत' का राष्ट्रीय पशु?", opts:["शेर","हाथी","बाघ","गाय"], ans:3},
-    {q:"'मीठा' का विलोम?", opts:["खट्टा","नमकीन","कड़वा","मीठी"], ans:1},
-    {q:"'नदी' का पर्यायवाची?", opts:["तालाब","सरिता","झील","समुद्र"], ans:2},
-    {q:"'हवा' का समानार्थी?", opts:["अग्नि","वायु","जल","पृथ्वी"], ans:2},
-    {q:"'बड़ा' का विलोम?", opts:["छोटा","ऊंचा","लंबा","मोटा"], ans:1},
-    {q:"'माता' का बहुवचन?", opts:["माताएं","माता","मातृ","माताजी"], ans:1},
-    {q:"'सफेद' रंग का फल?", opts:["आम","केला","सेब","नारियल"], ans:2},
-    {q:"'लिखना' का भविष्य काल?", opts:["लिखा","लिखता","लिखेगा","लिखने"], ans:3},
-    {q:"'आग' का विलोम?", opts:["पानी","धुआं","राख","चिंगारी"], ans:1},
-    {q:"'पेड़' का बहुवचन?", opts:["पेड़","पेड़ों","पेड़ा","पेड़ियाँ"], ans:2},
-    {q:"'सूरज' कहाँ से निकलता है?", opts:["पश्चिम","पूर्व","उत्तर","दक्षिण"], ans:2},
-    {q:"'खाना' का कर्ता?", opts:["खाता","खाने","खाया","खाना"], ans:1},
-    {q:"'गाय' का बच्चा?", opts:["कुत्ता","बिल्ली","बछड़ा","घोड़ा"], ans:3},
-    {q:"'पढ़ाई' कहाँ होती है?", opts:["घर","विद्यालय","दुकान","मंदिर"], ans:2},
-    {q:"'मीठा' का विशेषण?", opts:["स्वाद","मीठा","खाना","फल"], ans:2},
-    {q:"'सर्दी' का विलोम?", opts:["गर्मी","बारिश","बसंत","पतझड़"], ans:1},
-    {q:"'चिड़िया' का बहुवचन?", opts:["चिड़ियाँ","चिड़िया","चिड़े","चिड़की"], ans:1},
-    {q:"'भारत' का राष्ट्रीय गीत?", opts:["जन गण मन","वंदे मातरम","सारे जहां","भारत भाग्य"], ans:2},
-    {q:"'दूध' का रंग?", opts:["लाल","पीला","सफेद","काला"], ans:3},
-    {q:"'सड़क' पर क्या चलता है?", opts:["नाव","गाड़ी","हवाई जहाज","ट्रेन"], ans:2},
-    {q:"'आंख' का बहुवचन?", opts:["आंखें","आंख","आंखों","आंखी"], ans:1},
-    {q:"'शिक्षक' का काम?", opts:["पढ़ाना","बेचना","बनाना","चलाना"], ans:1},
-    {q:"'खेल' का पर्यायवाची?", opts:["पढ़ाई","क्रीड़ा","काम","व्यापार"], ans
+let currentRole="", currentStudentId=null, currentParentId=null, selectedTask=null, soundEnabled=true, chartObj=null, teacherAttach=null, autoInt=null, studInt=null, zoomLock=false, currentChartView='daily';
+const SAVE_KEY='Avengers_FINAL_DOWNLOAD_FIXED_V3';
+let db={students:[], parents:[], globalTasks:[]};
+const STUDENTS=[{id:1,name:"Ram",pass:"ram123"},{id:2,name:"Lakshman",pass:"lakshman123"},{id:3,name:"Sita",pass:"sita123"},{id:4,name:"David",pass:"david123"},{id:5,name:"Priya",pass:"priya123"},{id:6,name:"Arjun",pass:"arjun123"},{id:7,name:"Kavya",pass:"kavya123"},{id:8,name:"John",pass:"john123"},{id:9,name:"Ananya",pass:"ananya123"},{id:10,name:"Krishna",pass:"krishna123"}];
+const PARENTS=[{id:1,name:"Mr. Sharma",kidId:1,pass:"sharma123"},{id:2,name:"Mrs. Verma",kidId:2,pass:"verma123"},{id:3,name:"Mr. Patel",kidId:3,pass:"patel123"},{id:4,name:"Mrs. D'Souza",kidId:4,pass:"dsouza123"},{id:5,name:"Mr. Reddy",kidId:5,pass:"reddy123"},{id:6,name:"Mrs. Singh",kidId:6,pass:"singh123"},{id:7,name:"Mr. Nair",kidId:7,pass:"nair123"},{id:8,name:"Mrs. Khan",kidId:8,pass:"khan123"},{id:9,name:"Mr. Iyer",kidId:9,pass:"iyer123"},{id:10,name:"Mrs. Das",kidId:10,pass:"das123"}];
+const REWARDS=[{id:1,name:"🍦 Ice Cream",cost:100},{id:2,name:"🎮 30min Game",cost:250},{id:3,name:"📱 15min Phone",cost:200},{id:4,name:"🍕 Pizza Slice",cost:400},{id:5,name:"🏆 Star Badge",cost:500}];
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const todayStr=()=>new Date().toISOString().split('T')[0];
+function playClick(){ if(!soundEnabled) return; const a=document.getElementById('clickSound'); if(a){a.currentTime=0;a.play().catch(()=>{});} }
+function playNotif(){ if(!soundEnabled) return; const a=document.getElementById('notifSound'); if(a){a.currentTime=0;a.play().catch(()=>{});} }
+function toggleSound(){ soundEnabled=!soundEnabled; const b=document.getElementById('soundToggle'); if(b){ b.classList.toggle('on',soundEnabled); b.innerHTML=soundEnabled?'<i class="fa-solid fa-volume-high"></i>':'<i class="fa-solid fa-volume-xmark"></i>'; } playClick(); }
+function loadData(){
+ try{ const raw=localStorage.getItem(SAVE_KEY); if(raw){ db=JSON.parse(raw); } else { db={students:STUDENTS.map(s=>({...s,points:0,tasks:[],rewards:[],notifications:[],finished:[]})), parents:PARENTS.map(p=>({...p,notifications:[]})), globalTasks:[]}; } }catch(e){ db={students:STUDENTS.map(s=>({...s,points:0,tasks:[],rewards:[],notifications:[],finished:[]})), parents:PARENTS.map(p=>({...p,notifications:[]})), globalTasks:[]}; }
+ db.students.forEach(s=>{ if(!s.notifications) s.notifications=[]; if(!s.tasks) s.tasks=[]; if(!s.rewards) s.rewards=[]; if(!s.finished) s.finished=[]; if(s.points==null) s.points=0; });
+ db.parents.forEach(p=>{ if(!p.notifications) p.notifications=[]; });
+ if(!db.globalTasks) db.globalTasks=[];
+ saveData();
+}
+function saveData(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(db)); }catch(e){} }
+function showZoom(src,name,lock=false){ if(!src) return; if(lock) zoomLock=true; document.getElementById('hoverZoomImg').src=src; document.getElementById('hoverZoomCap').innerText=name||'Preview'; document.getElementById('hoverZoom').classList.add('show'); }
+function hideZoom(force=false){ if(zoomLock&&!force) return; zoomLock=false; document.getElementById('hoverZoom').classList.remove('show'); }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') hideZoom(true); });
+document.addEventListener('mouseover', e=>{ const img=e.target.closest('.attachment-preview img.zoomable'); if(img&&!zoomLock) showZoom(img.src, img.dataset.name||''); });
+document.addEventListener('click', e=>{ const img=e.target.closest('.attachment-preview img.zoomable'); if(img){ e.stopPropagation(); showZoom(img.src, img.dataset.name||'', true); } });
+function reqPerm(){ if('Notification' in window && Notification.permission==='default') Notification.requestPermission(); }
+function toast(t,m){ const c=document.getElementById('toastContainer'); if(!c) return; const d=document.createElement('div'); d.className='toast'; d.innerHTML=`<b>${esc(t)}</b><div style="font-size:14px; margin-top:3px">${esc(m)}</div>`; c.appendChild(d); playNotif(); setTimeout(()=>{ d.style.opacity='0'; setTimeout(()=>d.remove(),300); },3500); }
+function browserNote(t,b){ if('Notification' in window && Notification.permission==='granted'){ try{ new Notification(t,{body:b}); }catch(e){} } toast(t,b); }
+function pushNote(sid,title,msg){ const s=db.students.find(x=>x.id===sid); if(!s) return; if(!s.notifications) s.notifications=[]; s.notifications.unshift({id:Date.now()+Math.random(),title,msg,time:new Date().toLocaleString(),read:false}); const p=db.parents.find(x=>x.kidId===sid); if(p){ if(!p.notifications) p.notifications=[]; p.notifications.unshift({id:Date.now()+Math.random(),title:`${s.name}: ${title}`,msg,time:new Date().toLocaleString(),read:false}); } saveData(); renderNotifs(); }
+function sendReminder(sid,auto=false){ const s=db.students.find(x=>x.id===sid); if(!s) return; const pending=s.tasks.filter(t=>t.date===todayStr()&&t.status==='pending'); if(!pending.length) return; const msg=`${pending.length} pending - ${pending.map(t=>t.name).join(', ')}`; const title=auto?'⏰ Auto Reminder':'🔔 Reminder'; pushNote(sid,title,msg); if((currentRole==='student'&&currentStudentId===sid)||(currentRole==='parent'&&db.parents.find(x=>x.id===currentParentId)?.kidId===sid)) browserNote(title,msg); }
+function remindAll(){ playClick(); const list=db.students.filter(s=>s.tasks.some(t=>t.date===todayStr()&&t.status==='pending')); if(!list.length) return alert('No pending'); list.forEach(s=>sendReminder(s.id,false)); alert(`Sent to ${list.length}`); }
+function toggleAuto(){ const chk=document.getElementById('autoRemindToggle'); if(!chk) return; if(chk.checked){ autoInt=setInterval(()=>{ db.students.forEach(s=>{ if(s.tasks.some(t=>t.date===todayStr()&&t.status==='pending')) sendReminder(s.id,true); }); },600000); browserNote('⏰ Auto ON','Every 10 min'); } else { clearInterval(autoInt); toast('Auto OFF','Stopped'); } }
+function startStudAuto(){ if(studInt) clearInterval(studInt); studInt=setInterval(()=>{ const s=db.students.find(x=>x.id===currentStudentId); if(s&&s.tasks.some(t=>t.date===todayStr()&&t.status==='pending')) sendReminder(currentStudentId,true); },600000); }
+function getNotifs(){ if(currentRole==='student') return db.students.find(x=>x.id===currentStudentId)?.notifications||[]; if(currentRole==='parent') return db.parents.find(x=>x.id===currentParentId)?.notifications||[]; if(currentRole==='teacher'){ let a=[]; db.students.forEach(s=>(s.notifications||[]).forEach(n=>a.push({...n,student:s.name}))); return a.sort((x,y)=>y.id-x.id).slice(0,25); } return []; }
+function renderNotifs(){ const notifs=getNotifs(); const unread=notifs.filter(n=>!n.read).length; const cnt=document.getElementById('notifCount'); if(cnt){ cnt.style.display=unread>0?'flex':'none'; cnt.innerText=unread>9?'9+':unread; } const list=document.getElementById('notifList'); if(!list) return; list.innerHTML=notifs.length? notifs.map(n=>`<div class="notif-item ${n.read?'':'unread'}"><b>${esc(n.title)}</b> ${n.student?`(${esc(n.student)})`:''}<div>${esc(n.msg||n.message||'')}</div><div style="font-size:12px; opacity:0.6">${esc(n.time||'')}</div></div>`).join(''):`<p style="text-align:center; color:#64748b; padding:12px">No notifications</p>`; }
+function toggleNotifPanel(){ playClick(); const p=document.getElementById('notifPanel'); if(!p) return; p.classList.toggle('show'); if(p.classList.contains('show')){ getNotifs().forEach(n=>n.read=true); saveData(); renderNotifs(); } }
+function markAllRead(){ getNotifs().forEach(n=>n.read=true); saveData(); renderNotifs(); }
+function clearNotifs(){ if(!confirm('Clear?')) return; if(currentRole==='student'){ const s=db.students.find(x=>x.id===currentStudentId); if(s) s.notifications=[]; } else if(currentRole==='parent'){ const pr=db.parents.find(x=>x.id===currentParentId); if(pr) pr.notifications=[]; } else { db.students.forEach(s=>s.notifications=[]); db.parents.forEach(p=>p.notifications=[]); } saveData(); renderNotifs(); }
+document.addEventListener('click', e=>{ const panel=document.getElementById('notifPanel'); const btn=document.getElementById('notifBtn'); if(panel&&btn&&!panel.contains(e.target)&&!btn.contains(e.target)) panel.classList.remove('show'); });
+function getDatesForChart(view){ const d=[]; const t=new Date(); if(view==='daily'){ d.push(todayStr()); } else { for(let i=0;i<7;i++){ const x=new Date(); x.setDate(t.getDate()-i); d.push(x.toISOString().split('T')[0]); } } return d; }
+function setChartView(view){ playClick(); currentChartView=view; document.querySelectorAll('.chart-menu-btn').forEach(b=> b.classList.toggle('active', b.dataset.chart===view)); renderChart(); }
+function renderChart(){
+ const ctx=document.getElementById('performanceChart'); if(!ctx) return;
+ const dates=getDatesForChart(currentChartView);
+ const labels=db.students.map(s=>s.name);
+ const finishedData=db.students.map(s=> s.finished.filter(f=> dates.includes(f.date)).length );
+ if(chartObj){ try{ chartObj.destroy(); }catch(e){} }
+ try{
+  chartObj=new Chart(ctx,{
+   type:'bar',
+   data:{ labels, datasets:[{label:'Finished Tasks', data:finishedData, backgroundColor:'rgba(34,197,94,0.9)', borderColor:'#16a34a', borderWidth:2, borderRadius:6}]},
+   options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, ticks:{stepSize:1, precision:0, font:{size:15}}, grid:{color:'rgba(0,0,0,0.05)'}}, x:{ticks:{font:{size:14}}, grid:{display:false}}} }
+  });
+  const total=finishedData.reduce((a,b)=>a+b,0);
+  const top= finishedData.length? db.students[finishedData.indexOf(Math.max(...finishedData))]?.name : '-';
+  const stat=document.getElementById('chartStats');
+  if(stat){ stat.innerHTML=`<b>${currentChartView==='daily'?'Today':'This Week'}:</b> ${total} finished | Top: ${top} (${Math.max(...finishedData,0)})`; }
+ }catch(e){}
+}
+function renderTracker(){
+ const box=document.getElementById('taskTrackerList'); if(!box) return;
+ box.innerHTML=db.students.map(s=>{
+  const pending=s.tasks.filter(t=>t.date===todayStr()&&t.status==='pending').length;
+  const finishedToday=s.finished.filter(f=>f.date===todayStr()).length;
+  const col= pending===0? 'var(--green)':'var(--orange)';
+  const icon= pending===0? '✅':'⏳';
+  return `<div class="tracker-card" style="border-left:4px solid ${col}"><div class="tracker-card-header"><span>${icon} ${esc(s.name)}</span><span style="color:#fbbf24">${s.points} pts</span></div><div class="tracker-stats"><span class="tracker-stat" style="background:rgba(249,115,22,0.3)">⏳ ${pending} Pending</span><span class="tracker-stat" style="background:rgba(34,197,94,0.3)">✅ ${finishedToday} Finished</span></div><div class="progress-bar"><div class="progress-fill" style="width:${pending===0?100:50}%; background:${pending===0?'linear-gradient(90deg,var(--green),#4ade80)':'linear-gradient(90deg,var(--orange),#fb923c)'}"></div></div></div>`;
+ }).join('');
+}
+const tFile=document.getElementById('teacherFileInput');
+if(tFile){ tFile.onchange=e=>{
+ const f=e.target.files[0]; teacherAttach=null; const prev=document.getElementById('teacherFilePreview'); if(!prev) return;
+ if(!f){ prev.innerHTML=''; return; }
+ const r=new FileReader(); r.onload=ev=>{
+  teacherAttach={name:f.name,type:f.type,data:ev.target.result};
+  if(f.type.startsWith('image/')) prev.innerHTML=`<div class="attachment-preview"><img class="zoomable" data-name="${esc(f.name)}" src="${ev.target.result}"><div style="font-size:14px">${esc(f.name)}</div></div>`;
+  else prev.innerHTML=`<div class="attachment-preview">📎 ${esc(f.name)}</div>`;
+ }; r.readAsDataURL(f);
+};}
+const sFile=document.getElementById('fileInput');
+if(sFile){ sFile.onchange=e=>{
+ const f=e.target.files[0]; const prev=document.getElementById('filePreview'); if(!prev) return;
+ if(!f){ prev.innerHTML=''; return; }
+ const r=new FileReader(); r.onload=ev=>{
+  if(f.type.startsWith('image/')) prev.innerHTML=`<div class="attachment-preview"><img class="zoomable" data-name="${esc(f.name)}" src="${ev.target.result}"><div style="font-size:14px">${esc(f.name)}</div></div>`;
+  else prev.innerHTML=`<div class="attachment-preview">📎 ${esc(f.name)}</div>`;
+ }; r.readAsDataURL(f);
+};}
+function handleRoleChange(){
+ playClick(); const role=document.getElementById('loginRole')?.value;
+ const pBox=document.getElementById('passwordBox'); const sBox=document.getElementById('studentLogin');
+ if(pBox) pBox.style.display= role==='teacher'?'block':'none';
+ if(sBox) sBox.style.display= (role==='student'||role==='parent')?'block':'none';
+ const title=document.getElementById('loginTitle'); if(title) title.innerText= role==='parent'?'Tap Parent Name':'Tap Student Name';
+ const cont=document.getElementById('studentBtnContainer'); if(!cont) return;
+ if(role==='student') cont.innerHTML=db.students.map(s=>`<button class="studentLoginBtn" onclick="studentLogin(${s.id})"><i class="fa-solid fa-user"></i><br>${esc(s.name)}</button>`).join('');
+ if(role==='parent') cont.innerHTML=db.parents.map(p=>`<button class="studentLoginBtn" onclick="parentLogin(${p.id})"><i class="fa-solid fa-user-shield"></i><br>${esc(p.name)}</button>`).join('');
+}
+function studentLogin(id){ playClick(); const s=db.students.find(x=>x.id===id); if(!s) return; const pw=prompt(`Password for ${s.name}`); if(pw!==s.pass) return alert('Wrong'); currentRole='student'; currentStudentId=id; syncTasks(id); showDash(); }
+function parentLogin(id){ playClick(); const p=db.parents.find(x=>x.id===id); if(!p) return; const pw=prompt(`Password for ${p.name}`); if(pw!==p.pass) return alert('Wrong'); currentRole='parent'; currentParentId=id; showDash(); }
+function login(){ playClick(); const role=document.getElementById('loginRole')?.value; const pw=document.getElementById('loginPassword')?.value; if(!role||pw!=='1111') return alert('Invalid'); if(role!=='teacher') return alert('Use buttons'); currentRole=role; showDash(); }
+function showDash(){
+ playClick(); reqPerm();
+ const ls=document.getElementById('loginScreen'); const md=document.getElementById('mainDashboard');
+ if(ls) ls.style.display='none'; if(md) md.style.display='block';
+ const cont=document.getElementById('mainContainer'); if(cont) cont.classList.remove('teacher-full');
+ ['teacherCol','studentCol','parentCol','rewardCol'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
+ const col=document.getElementById(currentRole+'Col'); if(col) col.style.display='block';
+ if(currentRole==='teacher'){ if(cont) cont.classList.add('teacher-full'); const radios=document.querySelectorAll('input[name="sendType"]'); radios.forEach(r=>{ r.onchange=()=>{ const box=document.getElementById('studentSelectBox'); if(box) box.style.display=r.value==='select'?'grid':'none'; }; }); renderCheckboxes(); setTimeout(()=>{ renderChart(); renderTracker(); },150); }
+ if(currentRole==='student'){ const rc=document.getElementById('rewardCol'); if(rc) rc.style.display='block'; setTimeout(()=>{ const s=db.students.find(x=>x.id===currentStudentId); if(!s) return; const pend=s.tasks.filter(t=>t.date===todayStr()&&t.status==='pending'); if(pend.length) browserNote('🔔 Pending', `${pend.length} today`); startStudAuto(); },600); }
+ if(currentRole==='parent'){ setTimeout(()=>{ const par=db.parents.find(p=>p.id===currentParentId); if(!par) return; const kid=db.students.find(s=>s.id===par.kidId); if(!kid) return; const pend=kid.tasks.filter(t=>t.date===todayStr()&&t.status==='pending'); if(pend.length) browserNote(`🔔 ${kid.name}`, `${pend.length} pending`); },600); }
+ render(); renderNotifs();
+}
+function logout(){ playClick(); currentRole=''; currentStudentId=null; currentParentId=null; teacherAttach=null; clearInterval(autoInt); clearInterval(studInt); hideZoom(true); const tf=document.getElementById('teacherFileInput'); if(tf) tf.value=''; const tp=document.getElementById('teacherFilePreview'); if(tp) tp.innerHTML=''; const ls=document.getElementById('loginScreen'); const md=document.getElementById('mainDashboard'); if(ls) ls.style.display='block'; if(md) md.style.display='none'; }
+function renderCheckboxes(){ const box=document.getElementById('studentSelectBox'); if(!box) return; box.innerHTML=db.students.map(s=>`<div class="checkbox-item"><input type="checkbox" value="${s.id}" id="c${s.id}"><label for="c${s.id}">${esc(s.name)}</label></div>`).join(''); }
+function syncTasks(id){
+ const s=db.students.find(x=>x.id===id); if(!s) return;
+ db.globalTasks.forEach(gt=>{
+  const alreadyInTasks = s.tasks.find(x=>x.id===gt.id);
+  const alreadyFinished = s.finished.find(f=>f.taskId===gt.id);
+  if(!alreadyInTasks &&!alreadyFinished){
+   s.tasks.push({...gt, teacherAttachment: gt.teacherAttachment? {...gt.teacherAttachment}:null});
+  }
+ });
+ saveData();
+}
+function addTask(){
+ playClick(); const inp=document.getElementById('taskName'); if(!inp) return; const name=inp.value.trim(); if(!name) return alert('Enter name');
+ const task={id:Date.now(), name, points:50, status:'pending', date:todayStr(), teacherAttachment: teacherAttach? {...teacherAttach}:null};
+ db.globalTasks.push(task);
+ const sel=document.querySelector('input[name="sendType"]:checked')?.value||'all';
+ let targets= sel==='all'? db.students : db.students.filter(s=>{ const cb=document.getElementById('c'+s.id); return cb&&cb.checked; });
+ if(!targets.length) return alert('Select students');
+ targets.forEach(s=>{ s.tasks.push({...task, teacherAttachment: task.teacherAttachment? {...task.teacherAttachment}:null}); pushNote(s.id,'📚 New Task',name); });
+ inp.value=''; const tf=document.getElementById('teacherFileInput'); if(tf) tf.value=''; const tp=document.getElementById('teacherFilePreview'); if(tp) tp.innerHTML=''; teacherAttach=null;
+ browserNote('✅ Sent', `"${name}" to ${targets.length}`); saveData(); render(); renderChart(); renderTracker(); renderNotifs();
+}
+function resetAll(){ playClick(); if(!confirm('Reset all?')) return; db.students.forEach(s=>{s.tasks=[];s.points=0;s.rewards=[];s.notifications=[];s.finished=[];}); db.parents.forEach(p=>p.notifications=[]); db.globalTasks=[]; saveData(); render(); renderChart(); renderTracker(); renderNotifs(); alert('Reset Done'); }
+function openModal(sid,tid,name){ playClick(); selectedTask={sid,tid}; const el=document.getElementById('modalTaskName'); if(el) el.innerText=name; const m=document.getElementById('submitModal'); if(m) m.style.display='flex'; }
+function closeModal(){ playClick(); const m=document.getElementById('submitModal'); if(m) m.style.display='none'; const f=document.getElementById('fileInput'); if(f) f.value=''; const p=document.getElementById('filePreview'); if(p) p.innerHTML=''; }
+function submitFile(){
+ playClick(); const f=document.getElementById('fileInput')?.files[0]; if(!f) return alert('Select file'); if(!selectedTask) return;
+ const r=new FileReader(); r.onload=e=>{
+  const s=db.students.find(x=>x.id===selectedTask.sid); if(!s) return; const t=s.tasks.find(x=>x.id===selectedTask.tid); if(!t) return;
+  t.status='done'; t.studentAttachment={name:f.name,type:f.type,data:e.target.result};
+  saveData(); render(); renderChart(); renderTracker(); closeModal(); toast('✅ Submitted', t.name + ' sent for checking');
+ }; r.readAsDataURL(f);
+}
+function verifyTask(sid,tid){
+ playClick(); const s=db.students.find(x=>x.id===sid); if(!s) return; const t=s.tasks.find(x=>x.id===tid); if(!t) return;
+ const els=document.querySelectorAll('.task'); els.forEach(el=>{ if(el.textContent.includes(t.name)) el.classList.add('removing'); });
+ setTimeout(()=>{
+  if(t.status==='done'){
+   s.points+=t.points;
+   if(!s.finished) s.finished=[];
+   s.finished.push({id:Date.now(), taskId:tid, name:t.name, date:todayStr(), points:t.points, attachment:t.studentAttachment});
+   s.tasks=s.tasks.filter(x=>x.id!==tid);
+   pushNote(s.id,'🎉 Approved',`You earned ${t.points} pts for ${t.name}`);
+   browserNote('🎉 Points', `${s.name} earned ${t.points}`);
+  }
+  saveData(); render(); renderChart(); renderTracker(); renderNotifs();
+ },350);
+}
+function returnTask(sid,tid){
+ playClick();
+ if(!confirm('Return this task for redo?')) return;
+ const s=db.students.find(x=>x.id===sid); if(!s) return;
+ const t=s.tasks.find(x=>x.id===tid); if(!t) return;
+ t.status='pending';
+ delete t.studentAttachment;
+ saveData();
+ pushNote(s.id,'↩️ Returned',`${t.name} returned - please redo`);
+ browserNote('↩️ Returned',`${t.name} -> ${s.name}`);
+ render(); renderChart(); renderTracker(); renderNotifs();
+ toast('↩️ Returned',`${t.name} sent back`);
+}
+function redeemReward(rid){ playClick(); const s=db.students.find(x=>x.id===currentStudentId); if(!s) return; const r=REWARDS.find(x=>x.id===rid); if(!r) return; if(s.points<r.cost) return alert('Not enough'); s.points-=r.cost; s.rewards.push(r.name); saveData(); render(); toast('🎁 Redeemed', r.name); }
+
+// FIXED DOWNLOAD ALL - Now works for both submitted and approved
+function downloadAll(){
+ playClick();
+ try{
+  const zip=new JSZip();
+  const today=todayStr();
+  let has=false;
+  db.students.forEach(s=>{
+   const folder=zip.folder(`${s.name}_${today}`);
+   s.tasks.forEach(t=>{
+    if(t.studentAttachment && t.studentAttachment.data){
+     has=true;
+     try{
+      const b64=t.studentAttachment.data.split(',')[1] || t.studentAttachment.data;
+      const safeName=(t.name+"-"+t.studentAttachment.name).replace(/[\\/:*?"<>|]/g,"_");
+      folder.file(safeName, b64, {base64:true});
+     }catch(e){}
+    }
+   });
+   if(s.finished){
+    s.finished.forEach(f=>{
+     if(f.attachment && f.attachment.data){
+      has=true;
+      try{
+       const b64=f.attachment.data.split(',')[1] || f.attachment.data;
+       const safeName=(f.name+"-"+f.attachment.name+"-APPROVED").replace(/[\\/:*?"<>|]/g,"_");
+       folder.file(safeName, b64, {base64:true});
+      }catch(e){}
+     }
+    });
+   }
+  });
+  if(!has){ alert('No submissions yet. Let students submit first.'); return; }
+  zip.generateAsync({type:"blob"}).then(blob=>{
+   if(typeof saveAs!=='undefined'){ saveAs(blob, `Avengers_${today}.zip`); }
+   else { const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`Avengers_${today}.zip`; a.click(); URL.revokeObjectURL(url); }
+   toast('📦 ZIP Ready', 'All submissions downloaded');
+  });
+ }catch(err){ alert('Download error: '+err.message); console.error(err); }
+}
+function downloadStudent(sid){
+ playClick();
+ try{
+  const s=db.students.find(x=>x.id===sid); if(!s) return;
+  const zip=new JSZip();
+  const today=todayStr();
+  let has=false;
+  const folder=zip.folder(`${s.name}_${today}`);
+  s.tasks.forEach(t=>{
+   if(t.studentAttachment && t.studentAttachment.data){
+    has=true;
+    try{
+     const b64=t.studentAttachment.data.split(',')[1] || t.studentAttachment.data;
+     const safeName=(t.name+"-"+t.studentAttachment.name).replace(/[\\/:*?"<>|]/g,"_");
+     folder.file(safeName, b64, {base64:true});
+    }catch(e){}
+   }
+  });
+  if(s.finished){
+   s.finished.forEach(f=>{
+    if(f.attachment && f.attachment.data){
+     has=true;
+     try{
+      const b64=f.attachment.data.split(',')[1] || f.attachment.data;
+      const safeName=(f.name+"-"+f.attachment.name+"-APPROVED").replace(/[\\/:*?"<>|]/g,"_");
+      folder.file(safeName, b64, {base64:true});
+     }catch(e){}
+    }
+   });
+  }
+  if(!has){ alert('No submissions for '+s.name); return; }
+  zip.generateAsync({type:"blob"}).then(blob=>{
+   if(typeof saveAs!=='undefined'){ saveAs(blob, `${s.name}_${today}.zip`); }
+   else { const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`${s.name}_${today}.zip`; a.click(); URL.revokeObjectURL(url); }
+  });
+ }catch(err){ alert('Download error: '+err.message); }
+}
+function renderAttach(att,label){
+ if(!att) return '';
+ if(att.type&&att.type.startsWith('image/')){
+  return `<div class="attachment-preview"><b>${esc(label)}</b><br><img class="zoomable" data-name="${esc(att.name)}" src="${att.data}"><br><small style="font-size:14px">🔍 Hover to zoom</small><br><a href="${att.data}" download="${esc(att.name)}" style="color:white; font-size:13px">📥 Download</a></div>`;
+ } else {
+  return `<div class="attachment-preview"><b>${esc(label)}</b><br><a href="${att.data}" download="${esc(att.name)}" style="color:white">📎 ${esc(att.name)}</a></div>`;
+ }
+}
+function render(){
+ const dateEl=document.getElementById('studentDate'); if(dateEl) dateEl.innerText='📅 '+todayStr();
+ const myPts=document.getElementById('myPoints'); if(myPts&&currentStudentId){ const s=db.students.find(x=>x.id===currentStudentId); if(s) myPts.innerText=s.points; }
+ const show=currentRole==='student'? db.students.filter(s=>s.id===currentStudentId) : db.students;
+ const allEl=document.getElementById('allStudents');
+ if(allEl){
+  allEl.innerHTML=show.map(s=>{
+   const pend=s.tasks.filter(t=>t.date===todayStr()&&t.status==='pending');
+   const zipBtn=currentRole==='teacher'? `<button class="btn btn-small" onclick="downloadStudent(${s.id})">ZIP</button> <button class="btn btn-small btn-orange" onclick="sendReminder(${s.id},false)"><i class="fa-solid fa-bell"></i></button>`:'';
+   return `<div class="studentCard"><b>${esc(s.name)}</b><span class="points">${s.points}</span>${zipBtn}${pend.map(t=>`<div class="task"><b>${esc(t.name)}</b>${t.teacherAttachment? renderAttach(t.teacherAttachment,'📎 From Teacher'):''}${currentRole==='student'?`<button class="btn btn-orange" onclick="openModal(${s.id},${t.id},'${esc(t.name).replace(/'/g,"\\'")}')"><i class="fa-solid fa-upload"></i> Submit Work</button>`:''}</div>`).join('')||'<p style="opacity:0.7">No pending tasks 🎉</p>'}</div>`;
+  }).join('');
+ }
+ const vList=document.getElementById('verifyList');
+ if(vList){
+  const subs=db.students.flatMap(s=> s.tasks.filter(t=>t.status==='done').map(t=>`<div class="task" style="border-color:var(--green)"><b>${esc(s.name)}</b>: ${esc(t.name)}${renderAttach(t.studentAttachment,'📎 Submission')}<div style="display:flex; gap:8px; margin-top:8px"><button class="btn btn-green btn-small" onclick="verifyTask(${s.id},${t.id})">✅ Approve</button><button class="btn btn-orange btn-small" onclick="returnTask(${s.id},${t.id})">↩️ Return</button></div></div>`));
+  vList.innerHTML=subs.length? subs.join('') : '<p style="opacity:0.7">No submissions</p>';
+ }
+ const rewardBox=document.getElementById('rewardStore');
+ if(rewardBox&&currentStudentId){
+  const s=db.students.find(x=>x.id===currentStudentId); if(s){
+   rewardBox.innerHTML=REWARDS.map(r=>`<div class="task"><b>${esc(r.name)}</b> - ${r.cost}pts <button class="btn btn-green btn-small" onclick="redeemReward(${r.id})" ${s.points<r.cost?'disabled style="opacity:0.5"':''}>Redeem</button></div>`).join('') + (s.rewards.length? `<h4 style="margin-top:8px; font-size:18px">My Rewards:</h4>`+s.rewards.map(r=>`<div class="task" style="border-color:var(--green)">${esc(r)}</div>`).join(''):'');
+  }
+ }
+ const pkName=document.getElementById('parentKidName'); const pkPts=document.getElementById('parentKidPoints'); const pkTasks=document.getElementById('parentKidTasks'); const pkAlerts=document.getElementById('parentAlerts');
+ if(currentRole==='parent'&&pkName){
+  const par=db.parents.find(p=>p.id===currentParentId); if(par){ const kid=db.students.find(s=>s.id===par.kidId); if(kid){ pkName.innerText=`${par.name} - ${kid.name}`; if(pkPts) pkPts.innerText=kid.points; const pend=kid.tasks.filter(t=>t.date===todayStr()&&t.status==='pending').length; const done=kid.tasks.filter(t=>t.date===todayStr()&&t.status==='done').length; if(pkTasks) pkTasks.innerHTML=`<div class="task">Pending: ${pend}</div><div class="task" style="border-color:var(--green)">Submitted: ${done}</div>`; if(pkAlerts) pkAlerts.innerHTML= pend>0? `<div class="task" style="border-color:var(--red)">⚠ ${esc(kid.name)} has ${pend} pending<br><button class="btn btn-small btn-orange" style="margin-top:5px" onclick="sendReminder(${kid.id},false)">Remind</button></div>` : `<div class="task" style="border-color:var(--green)">✅ ${esc(kid.name)} all clear</div>`; } }
+ }
+ if(currentRole==='teacher'){ renderTracker(); }
+}
+loadData(); renderNotifs();
+</script>
+</body>
+</html>
